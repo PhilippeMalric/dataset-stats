@@ -33,6 +33,11 @@ export class DataSetCardListComponent implements OnInit {
         console.log("datasets",this.datasets)
     }
 
+    viewDs(){
+
+        console.log("datasets",this.datasets)
+    }
+
     editDataSet(dataset:Dataset_Stats) {
 
         const dialogConfig = new MatDialogConfig();

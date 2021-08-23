@@ -12,7 +12,7 @@
 
   <mat-card-actions class="course-actions">
 
-    <button mat-button class="mat-raised-button mat-primary" [routerLink]="['/dataset', dataset.url]">
+    <button mat-button class="mat-raised-button mat-primary" (click)="viewDs()" [routerLink]="['/datasets', dataset.url]">
       VIEW COURSE
     </button>
 
