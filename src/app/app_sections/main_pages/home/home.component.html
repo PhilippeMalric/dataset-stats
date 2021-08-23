@@ -43,13 +43,13 @@
 -->
 
 <div class="outterDiv">
-    <div class="innerDiv">Datasets app</div>
+    <div class="innerDiv">Dataset-Stats app <hr></div>
 </div>
 
 <div class="courses-panel">
     <div class="header">
 
-        <h2 class="title">All Datasets</h2>
+        <p class="center">All Datasets</p>
 
         <button mat-mini-fab color="primary" routerLink="/create-dataset">
             <mat-icon class="add-course-btn">add</mat-icon>
@@ -57,7 +57,6 @@
 
     </div>
   
-    <h1>Ds</h1>
     <datasets-card-list [datasets]="datasets$ | async"
         (datasetEdited)="reloadDataSets()"
         (datasetDeleted)="reloadDataSets()">

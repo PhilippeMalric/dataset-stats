@@ -1,7 +1,7 @@
 
 
 .courses-panel {
-    max-width: 400px;
+    width: fit-content;
     margin: 20px auto 0 auto;
 }
 
@@ -12,10 +12,15 @@
     align-items: center;
 }
 
-.title {
-    text-align: center;
-    margin-right: 15px;
-}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+    font-size: medium;
+  }
 
 .outterDiv{
     display: flex;
@@ -24,5 +29,8 @@
 }
 
 .innerDiv{
-    width: 100px;
+    margin-top: 20px;
+    font-size: 48px;
+    font-family: 'Courier New', Courier, monospace;
+    width: fit-content;
 }
