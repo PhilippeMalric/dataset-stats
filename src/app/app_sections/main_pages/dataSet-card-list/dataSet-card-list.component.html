@@ -1,4 +1,4 @@
-<mat-card *ngFor="let dataset of datasets" class="ds-card mat-elevation-z10">
+<mat-card *ngFor="let dataset of datasets" class="ds-card mat-elevation-z10 card-center">
 
   <mat-card-header>
 
@@ -22,7 +22,7 @@
                 (click)="editDataSet(dataset)">
           EDIT
         </button>
-        <button mat-mini-fab color="warn" (click)="onDeleteDataset(dataset)">
+        <button mat-mini-fab color="warn" (click)="onDeleteDataSet(dataset)">
           <mat-icon>delete</mat-icon>
         </button>
       </ng-container>

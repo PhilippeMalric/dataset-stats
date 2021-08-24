@@ -58,8 +58,8 @@ export class DataSetCardListComponent implements OnInit {
 
     }
 
-    onDeleteDataSet(dataset:Dataset_Stats) {
-
+    onDeleteDataSet(dataset) {
+console.log(dataset)
         this.datasetsService.deleteDataset(dataset.id)
             .pipe(
                 tap(() => {

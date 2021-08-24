@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {catchError, concatMap, last, map, take, tap} from 'rxjs/operators';
-import {from, Observable, throwError} from 'rxjs';
+import {from, Observable, Subscription, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
@@ -29,6 +29,7 @@ export class CreateDatasetComponent implements OnInit {
       promo: [false],
       promoStartAt: [null]
   });
+  sub1: Subscription;
 
   constructor(private fb:FormBuilder,
               private afs: AngularFirestore,
@@ -36,7 +37,7 @@ export class CreateDatasetComponent implements OnInit {
               private store:Store,
               private datasetsService:DatasetsService) {
 
-                this.store.pipe(select(selectFileState)).subscribe((data)=>{
+                this.sub1 = this.store.pipe(select(selectFileState)).subscribe((data)=>{
                     console.log(data)
                     this.form.patchValue({description:data.fileName})
                 }
@@ -47,6 +48,10 @@ export class CreateDatasetComponent implements OnInit {
 
   ngOnInit() {
       this.datasetId = this.afs.createId();
+  }
+
+  ngOnDestroy(){
+    this.sub1.unsubscribe()
   }
 
     onCreateDataset() {

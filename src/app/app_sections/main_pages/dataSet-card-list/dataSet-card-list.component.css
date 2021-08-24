@@ -8,3 +8,8 @@
 .ds-actions {
     text-align: center;
 }
+
+.card-center{
+    margin-left: auto;
+    margin-right: auto;
+}
