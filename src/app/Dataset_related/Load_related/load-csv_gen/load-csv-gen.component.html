@@ -35,7 +35,12 @@
       (change)="uploadListener($event)" accept=".csv" 
       /> 
     </div>
-  </mat-card-actions>
+    <div style="display:flex;width: 100%; align-items: center;justify-content: center;">
+      <button class="buttonView" mat-raised-button color="primary" (click)="openLimesurveyView()" >
+        Check questions
+      </button>
+    </div>
+    </mat-card-actions>
 
 
   
@@ -43,6 +48,7 @@
 
 </mat-expansion-panel>
 </mat-accordion>
+
 <!--<stat-div *ngIf="(fileName|async) != ''"></stat-div>-->
 <testdd *ngIf="(fileName_dd|async)!=''"></testdd>
 <div style="width: fit-content;margin: auto;">

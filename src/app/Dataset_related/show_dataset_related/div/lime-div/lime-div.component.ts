@@ -2,8 +2,8 @@ import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map, startWith, take, tap, withLatestFrom } from 'rxjs/operators';
+import { combineLatest, concat, merge, Observable } from 'rxjs';
+import { concatMap, map, mergeMap, startWith, take, tap, withLatestFrom } from 'rxjs/operators';
 import { updateFocusVar, updateVarName } from 'src/app/Rxjs/actions/main.actions';
 import { selectFileName } from 'src/app/Rxjs/reducers';
 import { DataService } from 'src/app/services/data.service';
@@ -19,50 +19,167 @@ export class LimeDivComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   varNames: any;
   currentIndex: number;
+  currentIndex_sub_q: number;
   interval:any
   fileName$: Observable<unknown>;
   data: any[];
   currentVar: any;
+  data_sub_q: any;
+  filter_result_sub_q: any;
 
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
+    
+
+    
     if(event.key == "m"){
-      if(this.currentIndex < this.data.length -1){
-        this.currentIndex = this.currentIndex+1
-        this.currentVar = this.data[this.currentIndex]
+
+      if(this.data[this.currentIndex]?.type == "M"){
+        
+       // si on est déjà dans un M est qu'on est pas à la fin
+        if(this.currentIndex_sub_q < this.filter_result_sub_q.length -1){
+          this.currentIndex_sub_q = this.currentIndex_sub_q+1
+         
+        }
+        else{
+          
+          if(this.currentIndex < this.data.length -1){
+            this.currentIndex = this.currentIndex+1
+            if(this.data[this.currentIndex]?.type == "M"){
+              this.currentIndex_sub_q = 0
+            }
+          }
+          else{
+            this.currentIndex = 0
+            if(this.data[this.currentIndex]?.type == "M"){
+              this.currentIndex_sub_q = 0
+            }
+          }
+         
+        }
+      }else{
+        if(this.currentIndex < this.data.length -1){
+          this.currentIndex = this.currentIndex+1
+        
+        }
+        else{
+          this.currentIndex = 0
+          
+        }
+        if(this.data[this.currentIndex]?.type == "M"){
+          this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
+            return data.title_p == this.data[this.currentIndex].title
+          })
+          this.currentIndex_sub_q = 0
+        }
       }
-      else{
-        this.currentIndex = 0
-        this.currentVar = this.data[this.currentIndex]
-      }
+
+ 
     }
+
     if(event.key == "n"){
-      if(this.currentIndex != 0){
-        this.currentIndex = this.currentIndex-1
-        this.currentVar = this.data[this.currentIndex]
+
+      if(this.data[this.currentIndex]?.type == "M"){
+
+         // si on est déjà dans un M est qu'on est pas au début
+        if(this.currentIndex_sub_q > 0){
+          this.currentIndex_sub_q = this.currentIndex_sub_q - 1
+          
+        }else{
+          if(this.currentIndex != 0){
+            this.currentIndex = this.currentIndex-1
+            if(this.data[this.currentIndex]?.type == "M"){
+              this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
+                return data.title_p == this.data[this.currentIndex].title
+              })
+              this.currentIndex_sub_q = this.filter_result_sub_q.length -1
+            }
+            
+          }
+          else{
+            this.currentIndex =  this.data.length -1
+            if(this.data[this.currentIndex]?.type == "M"){
+              this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
+                return data.title_p == this.data[this.currentIndex].title
+              })
+              this.currentIndex_sub_q = this.filter_result_sub_q.length -1
+            }
+            
+          }
+        }
+
       }
       else{
-        this.currentIndex =  this.data.length -1
-        this.currentVar = this.data[this.currentIndex]
+        if(this.currentIndex != 0){
+          this.currentIndex = this.currentIndex-1
+          if(this.data[this.currentIndex]?.type == "M"){
+            this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
+              return data.title_p == this.data[this.currentIndex].title
+            })
+            this.currentIndex_sub_q = this.filter_result_sub_q.length -1
+          }
+        }
+        else{
+          this.currentIndex =  this.data.length -1
+          this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
+            return data.title_p == this.data[this.currentIndex].title
+          })
+          this.currentIndex_sub_q = this.filter_result_sub_q.length -1
+        }
       }
+      
     }
+    this.get_newVar()
     console.log(event.key)
+  }
+
+  get_newVar(): any {
+
+    console.log("this.currentIndex",this.currentIndex, this.data.length -1)
+    
+
+    if(this.data[this.currentIndex]?.type == "L"){
+
+      this.currentVar = this.data[this.currentIndex]
+    }
+    if(this.data[this.currentIndex]?.type == "M"){
+
+      console.log("this.currentIndex_sub_q",this.currentIndex_sub_q, this.filter_result_sub_q.length -1)
+
+    if(this.filter_result_sub_q == 0 || !this.filter_result_sub_q){
+      this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
+        return data.title_p == this.data[this.currentIndex].title
+      })
+    }
+      this.currentVar = this.filter_result_sub_q[this.currentIndex_sub_q]
+    }
+
   }
 
   constructor(
     private dataService:DataService,
     private store:Store
-  ) { }
+  ) { 
+
+    this.filter_result_sub_q = []
+
+  }
 
   ngOnInit(): void {
 
-    this.currentIndex = 0
+    this.currentIndex = 18
+    this.currentIndex_sub_q = 0
 
-    this.dataService.dataset_lime$.subscribe((data)=>{
+    combineLatest(this.dataService.dataset_lime$,this.dataService.dataset_lime_sub_q$).subscribe((data)=>{
 
-      this.data = data
+      console.log("ngOnInit",data)
 
-      this.currentVar = data[this.currentIndex]
+      this.data = data[0]
+
+      this.data_sub_q = data[1]
+     
+      this.get_newVar()
+      
 
     })
     

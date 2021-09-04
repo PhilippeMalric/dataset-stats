@@ -21,6 +21,7 @@ export class DataService {
 mainVar$ : BehaviorSubject<String>
 dataset$ :  BehaviorSubject<any[]>
 dataset_lime$ :  BehaviorSubject<any[]>
+dataset_lime_sub_q$ :  BehaviorSubject<any[]>
 datasetSVG$ : BehaviorSubject<any[]>
 categories$: BehaviorSubject<Statistique[]>;
 categoriesD: {};
@@ -39,7 +40,7 @@ nAtable$: BehaviorSubject<any[]>;
     this.categoriesD = {}
 
     this.dataset_lime$ = new BehaviorSubject<any[]>([])
-    
+    this.dataset_lime_sub_q$ = new BehaviorSubject<any[]>([])
     this.dataset$ = new BehaviorSubject<any[]>([])
     this.dataset$.subscribe((data)=>{
 

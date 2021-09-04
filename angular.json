@@ -35,7 +35,7 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/@tidyjs/dist/umd/tidy.js"
+              "node_modules/@tidyjs/tidy/dist/umd/tidy.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -110,7 +110,7 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/@tidyjs/dist/umd/tidy.js"
+              "node_modules/@tidyjs/tidy/dist/umd/tidy.js"
             ]
           }
         },

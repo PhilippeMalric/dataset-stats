@@ -10,6 +10,7 @@ import { LoadCSV_ddComponent } from '../load-csv_dd/load-csv_dd.component';
 
 import {groupBy, summarize, tidy} from "@tidyjs/tidy"
 import { LimeDivComponent } from '../../show_dataset_related/div/lime-div/lime-div.component';
+import { LimesurveyService } from 'src/app/services/limesurvey.service';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class LoadCSVGenComponent implements OnInit {
     public dialog: MatDialog,
     private ngxCsvParser: NgxCsvParser,
     private dataService:DataService,
+    private limesurveyService:LimesurveyService,
     private store:Store) {
       this.fileName_dd = this.store.pipe(select(selectFileName_dd))
       this.fileName = this.store.pipe(select(selectFileName))
@@ -66,12 +68,7 @@ export class LoadCSVGenComponent implements OnInit {
 
         console.log('---------------Result', result.slice(1,10));
 
-        let formatedRes = this.formatResult(result)
-
-        console.log(formatedRes.slice(1,10))
-
-        this.dataService.dataset_lime$.next(formatedRes)
-
+        this.limesurveyService.resultQ(files[0].name,result)
 
         /*
         tidy(
@@ -82,13 +79,7 @@ export class LoadCSVGenComponent implements OnInit {
           )
         )
 */
-        const dialogRef = this.dialog.open(DialogCsv,{
-          width: '600px',
-          data: { component: LimeDivComponent}});
-            
-        dialogRef.afterClosed().subscribe(result => {
-          this.ouvert_dataset = false
-        });
+       
 
       }, (error: NgxCSVParserError) => {
         console.log('Error', error);
@@ -96,39 +87,15 @@ export class LoadCSVGenComponent implements OnInit {
       
   }
 
-
-formatResult(data:any[]){
-
-  let names = data[0]
-
-  let result = []
-
-  for(let i =1 ; i<data.length; i ++){
-    //console.log(i)
-    result[i-1] = new Object
-    result[i-1]["result"] = []
-    for(let nameI in names){
-      let name = names[nameI]
-      
-      if(i == 1){
-        console.log(name)
-      }
-      if(name[0] == 'X' && data[i][nameI] != "NA" && data[i][nameI] != ""){
-        result[i-1]["result"].push(data[i][nameI])
-      }else{
-        result[i-1][name] = data[i][nameI]
-      }
-      
-    }
+  openLimesurveyView = ()=>{
+    const dialogRef = this.dialog.open(DialogCsv,{
+      width: '600px',
+      data: { component: LimeDivComponent}});
+        
+    dialogRef.afterClosed().subscribe(result => {
+      //this.ouvert_dataset = false
+    });
   }
-
- let result2 = result.filter((data)=>{
-   return  data.result.length != 0 
-  })
-
-  return result2
- 
-}
   
 
   uploadVar(){
