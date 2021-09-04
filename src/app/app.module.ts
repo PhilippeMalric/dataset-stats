@@ -83,8 +83,10 @@ import { TestddComponent } from './Dataset_related/dd/testdd/testdd.component';
 import { TableauCroiseComponent } from './Dataset_related/show_dataset_related/div/tableau-croise/tableau-croise.component';
 import { DdVarNameComponent } from './Dataset_related/dd/dd-var-name/dd-var-name.component';
 import { DataViewTestComponent, DialogTest } from './Dataset_related/show_dataset_related/div/data-view-test/data-view-test.component';
+import { DialogCsv, LoadCSVGenComponent } from './Dataset_related/Load_related/load-csv_gen/load-csv-gen.component';
 
-
+import {MatChipsModule} from '@angular/material/chips';
+import { LimeDivComponent } from './Dataset_related/show_dataset_related/div/lime-div/lime-div.component';
 
 
 @NgModule({
@@ -129,9 +131,13 @@ import { DataViewTestComponent, DialogTest } from './Dataset_related/show_datase
     Graph3Component,
     Graph4Component,
     Graph5Component,
-    DialogTest
+    DialogTest,
+    LoadCSVGenComponent,
+    DialogCsv,
+    LimeDivComponent
   ],
   imports: [
+    MatChipsModule,
     MatCheckboxModule,
     MatSliderModule,
     MatGridListModule,

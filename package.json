@@ -31,6 +31,7 @@
     "@ngrx/entity": "^12.4.0",
     "@ngrx/store": "^12.4.0",
     "@ngrx/store-devtools": "^12.4.0",
+    "@tidyjs/tidy": "^2.4.3",
     "angular-cli-ghpages": "^1.0.0-rc.2",
     "angular-google-charts": "^2.2.1",
     "angular-plotly.js": "^4.0.0",

@@ -1,0 +1,59 @@
+
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel [expanded]="ouvert_dataset">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Limesurmey check
+      </mat-panel-title>
+      <mat-panel-description>
+        Un fichier csv
+        <mat-icon>view_week</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+
+    <mat-card  class="mat-elevation-z10 m-3">
+
+  <mat-card-header>
+
+    <mat-card-title>Upload Limesurvey</mat-card-title>
+
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>Veuillez choisir un fichier.</p>
+  </mat-card-content>
+
+  <mat-card-actions class="upload-actions">
+    <div>
+      <label for="txtFileUpload" style="width:100%;">Select a file for data:</label>
+      <input 
+      style="width:100%;"
+      type="file" #csvReader 
+      name="Upload CSV" 
+      id="txtFileUpload" 
+      (change)="uploadListener($event)" accept=".csv" 
+      /> 
+    </div>
+  </mat-card-actions>
+
+
+  
+    </mat-card>
+
+</mat-expansion-panel>
+</mat-accordion>
+<!--<stat-div *ngIf="(fileName|async) != ''"></stat-div>-->
+<testdd *ngIf="(fileName_dd|async)!=''"></testdd>
+<div style="width: fit-content;margin: auto;">
+  <data-view-test ></data-view-test>
+</div>
+
+
+
+
+
+
+
+
+
