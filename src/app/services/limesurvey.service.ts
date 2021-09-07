@@ -11,18 +11,18 @@ export class LimesurveyService {
 
   resultQ(fileName:string , result:any){
 
-console.log(result)
+//console.log(result)
 
     if( fileName.indexOf("sub_q_responses") != -1){
 
-      console.log("sub_q_responses result : ",result)
+      //console.log("sub_q_responses result : ",result)
       this.dataService.dataset_lime_sub_q$.next(this.formatResult_sub_q(result))
       
     }else{
 
       let formatedRes = this.formatResult(result)
 
-      console.log("formatedRes",formatedRes)
+      //console.log("formatedRes",formatedRes)
   
       this.dataService.dataset_lime$.next(formatedRes)
     }
@@ -44,7 +44,7 @@ console.log(result)
         let name = names[nameI]
         
         if(i == 1){
-          console.log(name)
+          //console.log(name)
         }
         if(name[0] == 'X' && data[i][nameI] != "NA" && data[i][nameI] != ""){
           result[i-1]["result"].push(data[i][nameI])
@@ -79,7 +79,7 @@ console.log(result)
         let name = names[nameI]
         
         if(i == 1){
-          console.log(name)
+          //console.log(name)
         }
         if(name[0] == 'X' && data[i][nameI] != "NA" && data[i][nameI] != ""){
           result[i-1]["result"].push(data[i][nameI])
@@ -94,10 +94,13 @@ console.log(result)
      return  data.result.length != 0 
     })
   
+   
+
     return result
    
   }
 
+
+
+
 }
-
-

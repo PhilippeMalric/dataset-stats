@@ -33,8 +33,9 @@ export class LimeDivComponent implements OnInit {
 
     
     if(event.key == "m"){
-
-      if(this.data[this.currentIndex]?.type == "M"){
+      //
+      
+      if(["F","M",":"].includes(this.data[this.currentIndex]?.type)){
         
        // si on est déjà dans un M est qu'on est pas à la fin
         if(this.currentIndex_sub_q < this.filter_result_sub_q.length -1){
@@ -45,13 +46,13 @@ export class LimeDivComponent implements OnInit {
           
           if(this.currentIndex < this.data.length -1){
             this.currentIndex = this.currentIndex+1
-            if(this.data[this.currentIndex]?.type == "M"){
+            if(["F","M",":"].includes(this.data[this.currentIndex]?.type)){
               this.currentIndex_sub_q = 0
             }
           }
           else{
             this.currentIndex = 0
-            if(this.data[this.currentIndex]?.type == "M"){
+            if(["F","M",":"].includes(this.data[this.currentIndex]?.type)){
               this.currentIndex_sub_q = 0
             }
           }
@@ -66,7 +67,7 @@ export class LimeDivComponent implements OnInit {
           this.currentIndex = 0
           
         }
-        if(this.data[this.currentIndex]?.type == "M"){
+        if(["F","M",":"].includes(this.data[this.currentIndex]?.type)){
           this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
             return data.title_p == this.data[this.currentIndex].title
           })
@@ -79,7 +80,7 @@ export class LimeDivComponent implements OnInit {
 
     if(event.key == "n"){
 
-      if(this.data[this.currentIndex]?.type == "M"){
+      if(["F","M",":"].includes(this.data[this.currentIndex]?.type)){
 
          // si on est déjà dans un M est qu'on est pas au début
         if(this.currentIndex_sub_q > 0){
@@ -88,7 +89,7 @@ export class LimeDivComponent implements OnInit {
         }else{
           if(this.currentIndex != 0){
             this.currentIndex = this.currentIndex-1
-            if(this.data[this.currentIndex]?.type == "M"){
+            if(["F","M",":"].includes(this.data[this.currentIndex]?.type)){
               this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
                 return data.title_p == this.data[this.currentIndex].title
               })
@@ -98,7 +99,7 @@ export class LimeDivComponent implements OnInit {
           }
           else{
             this.currentIndex =  this.data.length -1
-            if(this.data[this.currentIndex]?.type == "M"){
+            if(["F","M",":"].includes(this.data[this.currentIndex]?.type)){
               this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
                 return data.title_p == this.data[this.currentIndex].title
               })
@@ -112,7 +113,7 @@ export class LimeDivComponent implements OnInit {
       else{
         if(this.currentIndex != 0){
           this.currentIndex = this.currentIndex-1
-          if(this.data[this.currentIndex]?.type == "M"){
+          if(["F","M",":"].includes(this.data[this.currentIndex]?.type)){
             this.filter_result_sub_q = this.data_sub_q.filter((data)=>{
               return data.title_p == this.data[this.currentIndex].title
             })
@@ -137,12 +138,14 @@ export class LimeDivComponent implements OnInit {
 
     console.log("this.currentIndex",this.currentIndex, this.data.length -1)
     
+    console.log(["L","D","!","S",";","T"].includes(this.data[this.currentIndex]?.type))
+    console.log(["F","M",":"].includes(this.data[this.currentIndex]?.type))
 
-    if(this.data[this.currentIndex]?.type == "L"){
+    if(["L","D","!","S",";","T"].includes(this.data[this.currentIndex]?.type)){
 
       this.currentVar = this.data[this.currentIndex]
     }
-    if(this.data[this.currentIndex]?.type == "M"){
+    if(["F","M",":"].includes(this.data[this.currentIndex]?.type)){
 
       console.log("this.currentIndex_sub_q",this.currentIndex_sub_q, this.filter_result_sub_q.length -1)
 
@@ -153,6 +156,10 @@ export class LimeDivComponent implements OnInit {
     }
       this.currentVar = this.filter_result_sub_q[this.currentIndex_sub_q]
     }
+
+    this.currentVar.result2 = this.createCount2(this.currentVar.result)
+
+    console.log("currentVar", this.currentVar,this.data)
 
   }
 
@@ -187,15 +194,24 @@ export class LimeDivComponent implements OnInit {
    
   }
 
-
+  createCount2(arr){
+    console.log(arr)
+    var counts = {};
+    for (var i = 0; i < arr.length; i++) {
+        counts[arr[i]] = 1 + (counts[arr[i]] || 0);
+    }
+    console.log(counts)
+    let result = Object.keys(counts).sort().map((key)=>{
+      return key+" : "+counts[key]
+    })
+    console.log(result)
+    return result
+  }
   
-
   createStat = ()=>{
     
 
     console.log("stat1")
-
-    this.store.dispatch(updateVarName({data:this.myControl.value}))
 
     this.dataService.dataset$.pipe(take(1),
       tap(console.log)
@@ -244,6 +260,7 @@ export class LimeDivComponent implements OnInit {
              
             
         }
+
         createStatDesc = (col)=>{
           console.log("length")
           console.log(col.length)
