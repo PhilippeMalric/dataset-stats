@@ -138,10 +138,10 @@ export class LimeDivComponent implements OnInit {
 
     console.log("this.currentIndex",this.currentIndex, this.data.length -1)
     
-    console.log(["L","D","!","S",";","T"].includes(this.data[this.currentIndex]?.type))
+    console.log(["N","L","D","!","S",";","T"].includes(this.data[this.currentIndex]?.type))
     console.log(["F","M",":"].includes(this.data[this.currentIndex]?.type))
 
-    if(["L","D","!","S",";","T"].includes(this.data[this.currentIndex]?.type)){
+    if(["N","L","D","!","S",";","T"].includes(this.data[this.currentIndex]?.type)){
 
       this.currentVar = this.data[this.currentIndex]
     }
